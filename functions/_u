@@ -1,0 +1,14 @@
+#compdef u
+#autoload
+
+#vim:ft=sh
+local -a options
+local NAME LABEL MOUNTPOINT UUID
+options=()
+lsblk -o NAME,LABEL,MOUNTPOINT,UUID -nP | while read line; do
+    eval $line
+    if [ "$MOUNTPOINT" = "" ]; then
+        options+="$NAME:${LABEL:-$NAME} $UUID"
+    fi
+done
+_describe 'values' options

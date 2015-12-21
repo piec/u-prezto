@@ -1,0 +1,11 @@
+#autoload
+if [ "$*" = "" ]; then
+    #udisksctl status
+    lsblk -f
+elif [[ "$1" = /dev/sd* ]]; then
+    udisksctl mount -b "$1"
+elif [[ "$1" = sd* ]]; then
+    udisksctl mount -b /dev/"$1"
+else
+    udisksctl "$@"
+fi

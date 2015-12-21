@@ -1,0 +1,13 @@
+#autoload
+if [ "$*" = "" ]; then
+    #udisksctl status
+    lsblk -f
+elif [[ "$1" = /dev/sd* ]]; then
+    udisksctl unmount -b "$1"
+elif [[ "$1" = sd[a-z] ]]; then
+    udisksctl power-off -b /dev/"$1"
+elif [[ "$1" = sd* ]]; then
+    udisksctl unmount -b /dev/"$1"
+else
+    udisksctl "$@"
+fi
